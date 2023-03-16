@@ -7,3 +7,4 @@ coding:utf-8
 @Email :
 @description : 
 """
+PRE_PAGE = 15
