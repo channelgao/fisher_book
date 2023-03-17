@@ -26,6 +26,16 @@ class BookViewModel(object):
         self.summary = book['summary']
         self.image = book['image']
 
+    @property
+    def intro(self):
+        # 数据拼接
+        # 存在子项列表，即拆开
+        data_list = ['、'.join(data) if isinstance(data, list) else data for data in
+                  [self.author, self.publisher, self.price]]
+
+        intros = filter(lambda x: True if x else False, data_list)
+        return ' / '.join(intros)
+
 
 class BookCollection(object):
     """

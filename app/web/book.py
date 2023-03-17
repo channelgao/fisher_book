@@ -44,7 +44,6 @@ def search():
             book_spider.search_by_isbn(isbn=q)
         else:
             # 使用 关键字 api 获取数据
-            print('=================1=================')
             book_spider.search_by_keyword(keyword=q, page=page)
 
         # 书籍格式封装
