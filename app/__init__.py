@@ -10,6 +10,7 @@ coding:utf-8
 from flask import Flask
 
 from app.web import web_blueprint
+from app.recipe import download_blueprint
 from models.book import db
 
 
@@ -32,4 +33,6 @@ def create_app(create_db=False):
 
 
 def register_blueprint(app):
-    app.register_blueprint(web_blueprint, url_prefix='/')
+    app.register_blueprint(web_blueprint, url_prefix='/book')
+    app.register_blueprint(download_blueprint, url_prefix='/recipe')
+

@@ -10,7 +10,12 @@ coding:utf-8
 from flask import Blueprint
 
 # 创建蓝图
-web_blueprint = Blueprint('web_blueprint', __name__)
+web_blueprint = Blueprint('web', __name__)
 
 # 导入视图函数文件
 from app.web import book
+from app.web import auth
+from app.web import drift
+from app.web import gift
+from app.web import main
+from app.web import wish

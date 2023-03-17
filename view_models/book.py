@@ -7,11 +7,14 @@ coding:utf-8
 @Email : 
 @description : 
 """
+"""
+    因为前端需要的数据和三方api返回的数据结构不一致，所以处理 book spider 赋值完成的成员变量 （单个book数据）
+"""
 
 
 class BookViewModel(object):
     """
-    处理 book spider 赋值完成的成员变量 （单个book数据）
+    单本书籍的数据结构定义
     """
 
     def __init__(self, book):
@@ -26,15 +29,15 @@ class BookViewModel(object):
 
 class BookCollection(object):
     """
-    处理 book
+    单本 & 多本书籍的返回前端的数据结构定义
     """
 
-    def __init__(self, book):
+    def __init__(self):
         self.total = 0
         self.books = []
         self.keyword = ''
 
-    def fill(self, books_object, keyword):
-        self.total = books_object.total
-        self.books = [BookViewModel() for book in books_object.books]
+    def fill(self, spider_books_object, keyword):
+        self.total = spider_books_object.total
+        self.books = [BookViewModel(book) for book in spider_books_object.books]
         self.keyword = keyword

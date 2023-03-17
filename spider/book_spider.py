@@ -37,10 +37,16 @@ class BookSpider(object):
         # 通过 isbn 获取书籍数据
         url = self.isbn_url.format(isbn)
         get_response = HTTP.get(url, return_json=True)
-        self.__fill_single(get_response)
+        if len(get_response) > 0:
+            # http返回 包含数据
+            # 可以添加数据库验证保存提取
+            self.__fill_single(get_response)
 
     def search_by_keyword(self, keyword, page):
         # 通过 keyword 获取书籍数据
         url = self.keyword_url.format(keyword, page)
         get_response = HTTP.get(url, return_json=True)
-        self.__fill_collection(get_response)
+        if len(get_response) > 0:
+            # http返回 包含数据
+            # 可以添加数据库验证保存提取
+            self.__fill_collection(get_response)
