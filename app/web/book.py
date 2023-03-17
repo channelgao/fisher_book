@@ -14,12 +14,15 @@ from . import web_blueprint
 from forms.book import SearchForm
 from libs.isbn_selector import is_isbn
 from spider.book_spider import BookSpider
-from view_models.book import BookCollection
+from view_models.book import BookCollection, BookViewModel
 
 
 @web_blueprint.route('/<isbn>/detail')
-def book_detail():
-    pass
+def book_detail(isbn):
+    book_spider = BookSpider()
+    book_spider.search_by_isbn(isbn)
+    book_view_model = BookViewModel(book_spider.get_first_book)
+    return render_template('book_detail.html', book=book_view_model, wishes=[], gifts=[])
 
 
 @web_blueprint.route('/search')

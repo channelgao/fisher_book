@@ -11,7 +11,7 @@ from flask import Flask
 
 from app.web import web_blueprint
 from app.recipe import download_blueprint
-from models.book import db
+from models.base import db
 
 
 def create_app(create_db=False):

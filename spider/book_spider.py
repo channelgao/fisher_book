@@ -50,3 +50,7 @@ class BookSpider(object):
             # http返回 包含数据
             # 可以添加数据库验证保存提取
             self.__fill_collection(get_response)
+
+    @property
+    def get_first_book(self):
+        return self.books[0] if self.total >= 1 else None

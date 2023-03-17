@@ -19,10 +19,13 @@ class BookViewModel(object):
 
     def __init__(self, book):
         self.title = book['title']
+        self.isbn = book['isbn']
         self.publisher = book['publisher']
         self.pages = book['pages']
-        self.author = book['author']
+        self.author = ', '.join(book['author']) if isinstance(book['author'], list) else book['author']
         self.price = book['price']
+        self.pubdate = book['pubdate']
+        self.binding = book['binding']
         self.summary = book['summary']
         self.image = book['image']
 
@@ -30,7 +33,7 @@ class BookViewModel(object):
     def intro(self):
         # 数据拼接
         # 存在子项列表，即拆开
-        data_list = ['、'.join(data) if isinstance(data, list) else data for data in
+        data_list = [', '.join(data) if isinstance(data, list) else data for data in
                   [self.author, self.publisher, self.price]]
 
         intros = filter(lambda x: True if x else False, data_list)
