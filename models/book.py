@@ -9,7 +9,8 @@ coding:utf-8
 """
 from sqlalchemy import Integer, String, Column
 
-from base import Base
+from models.base import Base
+
 
 
 class Book(Base):

@@ -10,7 +10,7 @@ coding:utf-8
 from sqlalchemy import Integer, Column, Boolean, ForeignKey, String
 from sqlalchemy.orm import relationship
 
-from base import Base
+from models.base import Base
 
 
 class Gift(Base):

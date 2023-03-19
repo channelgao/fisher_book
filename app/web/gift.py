@@ -7,12 +7,15 @@ coding:utf-8
 @Email :
 @description :
 """
+from flask_login import login_required
+
 from . import web_blueprint
 
 
 @web_blueprint.route('/my/gifts')
+@login_required
 def my_gifts():
-    pass
+    return 'my gifts'
 
 
 @web_blueprint.route('/gifts/book/<isbn>')

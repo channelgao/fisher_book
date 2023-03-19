@@ -19,3 +19,8 @@ class Base(db.Model):
     
     create_time = Column('create_time', Integer)
     delete_status = Column(SmallInteger, default=1)
+
+    def set_attrs(self, attrs_dict):
+        for key, value in attrs_dict.items():
+            if hasattr(self, key) and key != id:
+                setattr(self, key, value)

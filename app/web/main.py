@@ -12,7 +12,7 @@ from . import web_blueprint
 
 @web_blueprint.route('/')
 def index():
-    pass
+    return 'index page'
 
 
 @web_blueprint.route('/personal')
