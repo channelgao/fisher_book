@@ -9,7 +9,11 @@ coding:utf-8
 """
 import json
 from flask import request, render_template, flash
+from flask_login import current_user
 
+from models.gift import Gift
+from models.wish import Wish
+from view_models.trade import TradeInfo
 from . import web_blueprint
 from forms.book import SearchForm
 from libs.isbn_selector import is_isbn
@@ -19,10 +23,36 @@ from view_models.book import BookCollection, BookViewModel
 
 @web_blueprint.route('/<isbn>/detail')
 def book_detail(isbn):
+    has_in_gifts = False
+    has_in_wishes = False
+
+    # 实例化书籍爬取对象
     book_spider = BookSpider()
+    # isbn查找书籍
     book_spider.search_by_isbn(isbn)
+    # 获取书籍对象
     book_view_model = BookViewModel(book_spider.get_first_book)
-    return render_template('book_detail.html', book=book_view_model, wishes=[], gifts=[])
+
+    # 用户登陆状态
+    if current_user.is_authenticated:
+        # 用户是赠送者
+        if Gift.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+            has_in_gifts = True
+        # 用户是获取者
+        if Wish.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+            has_in_wishes = True
+
+    # 所有赠送者的信息
+    trade_gifts = Gift.query.filter_by(isbn=isbn, launched=False).all()
+    # 所有索要者的信息
+    trade_wishes = Wish.query.filter_by(isbn=isbn, launched=False).all()
+
+    # 视图数据格式转换
+    trade_wishes_model = TradeInfo(trade_wishes)
+    trade_gifts_model = TradeInfo(trade_gifts)
+
+    return render_template('book_detail.html', book=book_view_model, wishes=trade_wishes_model,
+                           gifts=trade_gifts_model, has_in_gifts=has_in_gifts, has_in_wishes=has_in_wishes)
 
 
 @web_blueprint.route('/search')

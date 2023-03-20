@@ -20,10 +20,10 @@ from models.base import db
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = User()
-        user.set_attrs(form.data)
-        db.session.add(user)
-        db.session.commit()
+        with db.auto_commit():
+            user = User()
+            user.set_attrs(form.data)
+            db.session.add(user)
         return redirect(url_for('web.login'))
     return render_template('auth/register.html', form=form)
 

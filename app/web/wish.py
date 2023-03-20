@@ -7,6 +7,11 @@ coding:utf-8
 @Email :
 @description :
 """
+from flask import flash, current_app, redirect, url_for
+from flask_login import login_required, current_user
+
+from models.base import db
+from models.wish import Wish
 from . import web_blueprint
 
 
@@ -16,8 +21,21 @@ def my_wish():
 
 
 @web_blueprint.route('/wish/book/<isbn>')
+@login_required
 def save_to_wish(isbn):
-    pass
+    if current_user.can_save_to_list(isbn):
+        with db.auto_commit():
+            # 实例化礼物model对象
+            wish = Wish()
+            wish.isbn = isbn
+            # current_user 为当前用户
+            wish.uid = current_user.id
+            db.session.add(wish)
+        flash('书籍添加成功！')
+    else:
+        flash('这本书已存在于您的愿望清单里，或您已赠送此书请不要重复添加！')
+
+    return redirect(url_for('web.book_detail', isbn=isbn))
 
 
 @web_blueprint.route('/satisfy/wish/<int:wid>')

@@ -1,8 +1,8 @@
 """
 coding:utf-8
 @Software : PyCharm
-@File : gift.py
-@Time : 2023/3/17 17:02
+@File : wish.py
+@Time : 2023/3/20 8:31
 @Author : Ryan Gao
 @Email : 
 @description : 
@@ -13,11 +13,10 @@ from sqlalchemy.orm import relationship
 from models.base import Base
 
 
-class Gift(Base):
-    __tablename__ = 'gift'
+class Wish(Base):
+    __tablename__ = 'wish'
 
     id = Column(Integer, primary_key=True)
-    # 用户信息，和下方uid绑定，只需赋值uid，读取时使用user
     user = relationship('User')
     uid = Column(Integer, ForeignKey('user.id'))
     isbn = Column(String(15), nullable=False)
