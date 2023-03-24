@@ -21,7 +21,7 @@ def my_gifts():
     return 'my gifts'
 
 
-@web_blueprint.route('/gifts/book/<isbn>')
+@web_blueprint.route('/gifts/<isbn>')
 @login_required
 def save_to_gifts(isbn):
     if current_user.can_save_to_list(isbn):

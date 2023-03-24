@@ -41,7 +41,7 @@ def create_app(create_db=False):
 
 
 def register_blueprint(app):
-    app.register_blueprint(web_blueprint, url_prefix='/')
+    app.register_blueprint(web_blueprint, url_prefix='/book')
     app.register_blueprint(download_blueprint, url_prefix='/recipe')
 
 
