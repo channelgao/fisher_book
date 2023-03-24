@@ -7,12 +7,19 @@ coding:utf-8
 @Email :
 @description :
 """
+from flask import render_template
+
+from models.book import Book
+from models.gift import Gift
+from view_models.book import BookViewModel
 from . import web_blueprint
 
 
 @web_blueprint.route('/')
 def index():
-    return 'index page'
+    recent_gifts = Gift.recent()
+    books = [BookViewModel(gift.book) for gift in recent_gifts]
+    return render_template('index.html', recent=books)
 
 
 @web_blueprint.route('/personal')
