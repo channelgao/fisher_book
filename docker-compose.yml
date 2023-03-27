@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  flask-fisher:
+    build: .
+    environment:
+      - MYSQL_HOST=mysql-server
+    networks:
+      - demo-network
+    ports:
+      - 5000:5000
+
+  mysql-server:
+    image: mysql:5.7
+    networks:
+     - demo-network
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'fisher'
+    ports:
+      - 3306:3306
+    volumes:
+      - D:\software\Docker\Volumes\mysql57\:/var/lib/mysql
+
+networks:
+  demo-network:
