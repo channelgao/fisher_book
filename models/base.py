@@ -9,11 +9,11 @@ coding:utf-8
 """
 import time
 
-import sqlalchemy
 from contextlib import contextmanager
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
 from sqlalchemy import Column, SmallInteger, Integer
+from sqlalchemy.exc import OperationalError
 
 
 class SQLAlchemy(_SQLAlchemy):
@@ -38,7 +38,7 @@ class Query(BaseQuery):
 # 初始化 SQLAlchemy 对象 子类
 try:
     db = SQLAlchemy(query_class=Query)
-except sqlalchemy.exc.OperationalError as e:
+except OperationalError as e:
     time.sleep(5)
     db = SQLAlchemy(query_class=Query)
 
