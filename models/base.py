@@ -7,6 +7,9 @@ coding:utf-8
 @Email : 
 @description : 
 """
+import time
+
+import sqlalchemy
 from contextlib import contextmanager
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
@@ -33,7 +36,11 @@ class Query(BaseQuery):
 
 
 # 初始化 SQLAlchemy 对象 子类
-db = SQLAlchemy(query_class=Query)
+try:
+    db = SQLAlchemy(query_class=Query)
+except sqlalchemy.exc.OperationalError as e:
+    time.sleep(5)
+    db = SQLAlchemy(query_class=Query)
 
 
 class Base(db.Model):
