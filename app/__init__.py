@@ -7,6 +7,8 @@ coding:utf-8
 @Email :
 @description : 
 """
+import time
+
 from flask import Flask
 from flask_login import LoginManager
 
@@ -26,7 +28,13 @@ def create_app(create_db=False):
     # 蓝图注册
     register_blueprint(app)
     # 数据库注册
-    db.init_app(app)
+    try:
+        # 数据库连接超时时间冗余
+        time.sleep(2)
+        db.init_app(app)
+    except Exception as e:
+        time.sleep(5)
+        db.init_app(app)
     # 初始化 login_manager
     login_manager.init_app(app)
     # 登录页面的视图函数
